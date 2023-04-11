@@ -1,0 +1,24 @@
+{
+  "name": "vinyl-pop-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "data:get": "ts-node --esm ./src/dev-data/index.ts"
+  },
+  "keywords": [],
+  "autor": "Michał Paczyński",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.3.5",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.31",
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.4"
+  }
+}
