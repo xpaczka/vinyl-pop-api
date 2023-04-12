@@ -24,7 +24,6 @@ const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: c
     }
 
     container[i].mainSeries = mainSeries;
-    // container[i].popNumber = popNumber.match(/([#0-9])/g)!.join('');
     container[i].popNumber = popNumber;
   }
 };
