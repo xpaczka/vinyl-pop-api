@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 import axios from 'axios';
 import insertScrapedData from './insert-scraped-data.js';
-import { IPopData } from './types.js';
+import { IPopData } from '../types.js';
 
 const performScraping = async (urlLinks: string[]): Promise<IPopData[]> => {
   const data: IPopData[][] = [];

@@ -1,4 +1,4 @@
-import { IPopData } from './types.js';
+import { IPopData } from '../types.js';
 
 const scrapeName = (data: cheerio.Cheerio, container: IPopData[], $: cheerio.Root): void => {
   data.each((index, element) => {

@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "ts-node --esm ./src/server.ts",
-    "data:get": "ts-node --esm ./src/dev-data/index.ts"
+    "data:get": "ts-node --esm ./src/dev-data/index.ts --get",
+    "data:import": "ts-node --esm ./src/dev-data/index.ts --import"
   },
   "keywords": [],
   "autor": "Michał Paczyński",
@@ -15,7 +16,8 @@
     "axios": "^1.3.5",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.31",
