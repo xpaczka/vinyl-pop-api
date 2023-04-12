@@ -27,7 +27,7 @@ const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: c
 
     if (popNumber) {
       if (popNumber.toLowerCase().includes('pack')) {
-        const multipackSize = popNumber.split(' ')[0];
+        const multipackSize = popNumber.trim().split(' ')[0];
         container[i].multipack = +multipackSize;
         continue;
       }
