@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-import popRouter from './routes/popRoutes.js'
+import popRouter from './routes/popRoutes.js';
 
 const app: Application = express();
 app.use(express.json());

@@ -4,5 +4,5 @@ export interface IPopData {
   mainSeries?: string;
   series?: string;
   image: string;
-  // TODO -> add multipack property
+  multipack?: number;
 }

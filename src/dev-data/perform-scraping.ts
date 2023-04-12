@@ -35,10 +35,10 @@ const performScraping = async (urlLinks: string[]): Promise<IPopData[]> => {
       popData.push({
         name: '',
         image: '',
-      })
+      });
 
-      if (series) popData[index].series = series
-  });
+      if (series) popData[index].series = series;
+    });
 
     insertScrapedData(scrapedName, scrapedInfo, scrapedImage, popData, $, series);
     data.push(popData);
