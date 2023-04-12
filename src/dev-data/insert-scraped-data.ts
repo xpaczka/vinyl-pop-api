@@ -11,20 +11,22 @@ const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: c
   const filteredScrapedInfo = data.toArray().filter(el => $(el).text() !== 'n');
 
   for (let i = 0; i < filteredScrapedInfo.length; i++) {
-    let [mainSeries, popNumber] = $(filteredScrapedInfo[i]).text().split(' / ');
+    let scrapedInfo: string[];
+    const textData = $(filteredScrapedInfo[i]).text();
 
-    if (mainSeries.includes(series.split(' ').join('-'))) {
-      mainSeries = mainSeries.slice(0, -series.length);
-    }
-
-    if (!popNumber || !popNumber.match(/([#0-9])/g)) {
-      popNumber = '';
+    if (textData.includes('/')) {
+      scrapedInfo = textData.split('/');
     } else {
-      popNumber = popNumber.match(/([#0-9])/g)!.join('');
+      scrapedInfo = textData.split('#');
     }
 
-    container[i].mainSeries = mainSeries;
-    container[i].popNumber = popNumber;
+    let [mainSeries, popNumber] = scrapedInfo;
+
+    if (mainSeries.includes(series.split(' ').join('-'))) mainSeries = mainSeries.slice(0, -series.length);
+    if (popNumber && popNumber.includes('#')) popNumber = popNumber.trim().slice(1);
+
+    if (mainSeries) container[i].mainSeries = mainSeries.trim();
+    if (popNumber) container[i].popNumber = popNumber.trim();
   }
 };
 

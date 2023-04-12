@@ -31,15 +31,14 @@ const performScraping = async (urlLinks: string[]): Promise<IPopData[]> => {
 
     const popData: IPopData[] = [];
 
-    scrapedName.toArray().forEach(() =>
+    scrapedName.toArray().forEach((_, index) => {
       popData.push({
         name: '',
-        popNumber: '',
-        mainSeries: '',
-        series,
         image: '',
       })
-    );
+
+      if (series) popData[index].series = series
+  });
 
     insertScrapedData(scrapedName, scrapedInfo, scrapedImage, popData, $, series);
     data.push(popData);

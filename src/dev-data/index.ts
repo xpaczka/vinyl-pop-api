@@ -7,7 +7,6 @@ import Pop from '../models/popModel.js';
 dotenv.config()
 
 const DB = process.env.DATABASE!.replace('<PASSWORD>', process.env.DATABASE_PASSWORD!);
-mongoose.connect(DB).then(() => console.log('Connected to database...'));
 
 const urlLinks: string[] = JSON.parse(fs.readFileSync('./src/dev-data/data/sources.json', 'utf-8'));
 const pops = JSON.parse(fs.readFileSync('./src/dev-data/data/data.json', 'utf-8'));
@@ -31,8 +30,32 @@ const importData = async (): Promise<void> => {
   }
 }
 
-if (process.argv[2] === '--get') {
-  scrapeData();
-} else if (process.argv[2] == '--import') {
-  importData();
+const deleteData = async (): Promise<void> => {
+  try {
+    await Pop.deleteMany();
+    console.log('Data deleted succesfully');
+    process.exit();
+  } catch(err) {
+    console.log(err);
+  }
 }
+
+const initOperation = async (): Promise<void> => {
+  switch(process.argv[2]) {
+    case '--get':
+      await scrapeData();
+      break;
+    case '--import':
+      await mongoose.connect(DB)
+      console.log('Connected to database...')
+      await importData();
+      break;
+    case '--delete':
+      await mongoose.connect(DB)
+      console.log('Connected to database...')
+      await deleteData();
+      break;
+  }
+}
+
+initOperation()
