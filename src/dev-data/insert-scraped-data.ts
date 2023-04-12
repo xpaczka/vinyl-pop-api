@@ -7,6 +7,7 @@ const scrapeName = (data: cheerio.Cheerio, container: IPopData[], $: cheerio.Roo
   });
 };
 
+// TODO -> add multipack property
 const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: cheerio.Root, series: string): void => {
   const filteredScrapedInfo = data.toArray().filter(el => $(el).text() !== 'n');
 
@@ -22,11 +23,25 @@ const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: c
 
     let [mainSeries, popNumber] = scrapedInfo;
 
-    if (mainSeries.includes(series.split(' ').join('-'))) mainSeries = mainSeries.slice(0, -series.length);
-    if (popNumber && popNumber.includes('#')) popNumber = popNumber.trim().slice(1);
-
+    if (mainSeries.includes(series.split(' ').join('-'))) mainSeries = mainSeries.slice(0, -series.length - 1);
     if (mainSeries) container[i].mainSeries = mainSeries.trim();
-    if (popNumber) container[i].popNumber = popNumber.trim();
+    
+    if (popNumber) {      
+      if (popNumber.includes('#')) popNumber = popNumber.trim().slice(1);
+      if (popNumber.startsWith('0')) popNumber = popNumber.slice(1);
+      if (popNumber.toLowerCase().includes('pack')) return;
+
+      if (/[A-Z]\w+/g.test(popNumber)) {
+        const cleanPopNumber = popNumber.match(/[0-9]/g)?.join('');
+        
+        if (cleanPopNumber) {
+          container[i].popNumber = +(cleanPopNumber.trim());
+          return;
+        }
+      }
+
+      container[i].popNumber = +(popNumber.trim());
+    }
   }
 };
 

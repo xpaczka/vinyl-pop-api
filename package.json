@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "ts-node --esm ./src/server.ts",
+    "dev": "nodemon",
     "data:get": "ts-node --esm ./src/dev-data/index.ts --get",
     "data:import": "ts-node --esm ./src/dev-data/index.ts --import",
     "data:delete": "ts-node --esm ./src/dev-data/index.ts --delete"
@@ -24,6 +25,7 @@
     "@types/cheerio": "^0.22.31",
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.11",
+    "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
