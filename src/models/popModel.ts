@@ -5,7 +5,6 @@ const popSchema: mongoose.Schema<IPopData> = new mongoose.Schema({
   name: { type: String, required: [true, 'Pop figure must have a name'] },
   image: { type: String, required: [true, 'Pop figure must have an image'] },
   popNumber: { type: Number },
-  mainSeries: { type: String },
   series: { type: String },
   multipack: { type: Number },
 });

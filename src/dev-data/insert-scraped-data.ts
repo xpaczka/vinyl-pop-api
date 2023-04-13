@@ -1,29 +1,21 @@
 import { IPopData } from '../types.js';
 
 const scrapeName = (data: cheerio.Cheerio, container: IPopData[], $: cheerio.Root): void => {
-  data.each((index, element) => {
-    const name = $(element).text();
-    container[index].name = name;
-  });
+  data.each((index, element) => container[index].name = $(element).text())
 };
 
 const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: cheerio.Root, series: string): void => {
   const filteredScrapedInfo = data.toArray().filter(el => $(el).text() !== 'n');
 
   for (let i = 0; i < filteredScrapedInfo.length; i++) {
-    let scrapedInfo: string[];
     const textData = $(filteredScrapedInfo[i]).text();
+    let popNumber: string;
 
     if (textData.includes('/')) {
-      scrapedInfo = textData.split('/');
+      popNumber = textData.split('/')[1];
     } else {
-      scrapedInfo = textData.split('#');
+      popNumber = textData.split('#')[1];
     }
-
-    let [mainSeries, popNumber] = scrapedInfo;
-
-    if (mainSeries.includes(series.split(' ').join('-'))) mainSeries = mainSeries.slice(0, -series.length - 1);
-    if (mainSeries) container[i].mainSeries = mainSeries.trim();
 
     if (popNumber) {
       if (popNumber.toLowerCase().includes('pack')) {
@@ -34,7 +26,6 @@ const scrapeAdditionalInfo = (data: cheerio.Cheerio, container: IPopData[], $: c
 
       if (popNumber.includes('#')) popNumber = popNumber.trim().slice(1);
       if (popNumber.startsWith('0')) popNumber = popNumber.slice(1);
-      if (popNumber.toLowerCase().includes('pack')) return;
 
       if (/[A-Z]\w+/g.test(popNumber)) {
         const cleanPopNumber = popNumber.match(/[0-9]/g)?.join('');
