@@ -1,10 +1,21 @@
 import { Request, Response } from 'express';
 import Pop from '../models/popModel.js';
+import { IPopData } from '../types.js';
+
+const findDocuments = async (options?: object): Promise<IPopData[]> => {
+  try {
+    const documents = await (options ? Pop.find(options) : Pop.find()).select('-__v');
+    return documents;
+  } catch(err) {
+    console.log(err);
+    return [];
+  }
+}
 
 // Get All Pops
 export const getAllPops = async (_: Request, res: Response): Promise<void> => {
   try {
-    const pops = await Pop.find().select('-__v');
+    const pops = await findDocuments();
     res.status(200).json({ status: 'success', results: pops.length, data: { pops } });
   } catch (err) {
     res.status(404).json({ status: 'failed', message: err });
@@ -14,8 +25,7 @@ export const getAllPops = async (_: Request, res: Response): Promise<void> => {
 // Get Pops by Number
 export const getPopsByNumber = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { popNumber } = req.params;
-    const pops = await Pop.find({ popNumber }).select('-__v');
+    const pops = await findDocuments({ popNumber: req.params.popNumber });
     res.status(200).json({ status: 'success', results: pops.length, data: { pops } });
   } catch (err) {
     res.status(404).json({ status: 'failed', message: err });
@@ -25,7 +35,7 @@ export const getPopsByNumber = async (req: Request, res: Response): Promise<void
 // Get Multipacks
 export const getMultipacks = async (_: Request, res: Response): Promise<void> => {
   try {
-    const pops = await Pop.find({ multipack: { $ne: null } }).select('-__v');
+    const pops = await findDocuments({ multipack: { $ne: null } });
     res.status(200).json({ status: 'success', results: pops.length, data: { pops } });
   } catch (err) {
     res.status(404).json({ status: 'failed', message: err });
